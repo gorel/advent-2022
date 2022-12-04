@@ -4,6 +4,7 @@ from typing import Tuple
 
 from advent.utils import run_default
 
+
 def solve(input_file: str) -> Tuple[int, int]:
     return (0, 0)
 
