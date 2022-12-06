@@ -2,9 +2,12 @@
 
 import argparse
 import os
-from typing import Callable, Optional, Tuple
+from typing import Callable, Optional, Tuple, TypeVar
 
-SolveFunc = Callable[[str], Tuple[int, int]]
+T1 = TypeVar("T1")
+T2 = TypeVar("T2")
+
+SolveFunc = Callable[[str], Tuple[T1, T2]]
 
 DEFAULT_TEST_INPUT_NAME = "test.txt"
 DEFAULT_INPUT_NAME = "input.txt"
@@ -29,9 +32,9 @@ def get_default_input_path(main_file: str) -> str:
 
 def run_default(
     main_file: str,
-    solve: SolveFunc,
-    test_solution1: Optional[int] = None,
-    test_solution2: Optional[int] = None,
+    solve: SolveFunc[T1, T2],
+    test_solution1: Optional[T1] = None,
+    test_solution2: Optional[T2] = None,
 ) -> None:
     parser = get_parser(
         get_default_input_path(main_file), get_default_test_input_path(main_file)
