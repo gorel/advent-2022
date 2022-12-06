@@ -1,8 +1,12 @@
+[![Update README ⭐](https://github.com/jrodal98/advent-of-code-2022/actions/workflows/readme-stars.yml/badge.svg)](https://github.com/jrodal98/advent-of-code-2022/actions/workflows/readme-stars.yml)
+
 # advent-2022
 
 https://adventofcode.com/2022/
 
-Setup
+<!--- advent_readme_stars table --->
+
+## Setup
 
 ```
 # Recommended
