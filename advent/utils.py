@@ -43,9 +43,13 @@ def run_default(
 
     res1, res2 = solve(args.test_file)
     if test_solution1 is not None:
-        assert res1 == test_solution1, "Failed test for part 1"
+        assert (
+            res1 == test_solution1
+        ), f"Failed test for part 1; {res1} != {test_solution1}"
     if test_solution2 is not None:
-        assert res2 == test_solution2, "Failed test for part 2"
+        assert (
+            res2 == test_solution2
+        ), f"Failed test for part 2; {res2} != {test_solution2}"
 
     res1, res2 = solve(args.input_file)
     print(f"Solution 1: {res1}")
