@@ -5,6 +5,7 @@
 https://adventofcode.com/2022/
 
 <!--- advent_readme_stars table --->
+<!--- advent_readme_stars table --->
 
 ## Setup
 
