@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import functools
+import json
 from typing import List, Tuple
 
 from advent.utils import run_default
@@ -44,8 +45,8 @@ def solve(input_file: str) -> Tuple[int, int]:
         while not done_reading:
             pair_idx += 1
             try:
-                left = eval(next(f))
-                right = eval(next(f))
+                left = json.loads(next(f))
+                right = json.loads(next(f))
                 all_packets.append(left)
                 all_packets.append(right)
                 if right_order(left, right) < 0:
