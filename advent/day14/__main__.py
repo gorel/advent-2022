@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, List, Tuple
+from typing import Iterator, List, Tuple
 
 from advent.utils import run_default
 
@@ -19,7 +19,7 @@ class Line:
     start: Point
     end: Point
 
-    def __iter__(self) -> Iterable[Point]:
+    def __iter__(self) -> Iterator[Point]:
         if self.start.x == self.end.x:
             if self.start.y < self.end.y:
                 for yy in range(self.start.y, self.end.y + 1):
@@ -50,12 +50,10 @@ class Graph:
     ) -> None:
         self.origin = origin
         self.filled = set()
-        self.concrete = set()
         self.max_y = lines[0].start.y
         for line in lines:
             for point in line:
                 self.filled.add(point)
-                self.concrete.add(point)
                 self.max_y = max(self.max_y, point.y)
 
         self.floor = None
