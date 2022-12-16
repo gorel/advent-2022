@@ -46,10 +46,12 @@ def run_default(
         assert (
             res1 == test_solution1
         ), f"Failed test for part 1; {res1} != {test_solution1}"
+        print("Passed test input #1")
     if test_solution2 is not None:
         assert (
             res2 == test_solution2
         ), f"Failed test for part 2; {res2} != {test_solution2}"
+        print("Passed test input #2")
 
     res1, res2 = solve(args.input_file)
     print(f"Solution 1: {res1}")
