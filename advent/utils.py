@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import datetime
 import os
 from typing import Callable, Optional, Tuple, TypeVar
 
@@ -41,18 +42,26 @@ def run_default(
     )
     args = parser.parse_args()
 
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Starting ({now})")
     res1, res2 = solve(args.test_file)
     if test_solution1 is not None:
         assert (
             res1 == test_solution1
         ), f"Failed test for part 1; {res1} != {test_solution1}"
-        print("Passed test input #1")
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"Passed test input #1 ({now})")
     if test_solution2 is not None:
         assert (
             res2 == test_solution2
         ), f"Failed test for part 2; {res2} != {test_solution2}"
-        print("Passed test input #2")
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"Passed test input #2 ({now})")
 
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Starting real input ({now})")
     res1, res2 = solve(args.input_file)
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Finished real input ({now})")
     print(f"Solution 1: {res1}")
     print(f"Solution 2: {res2}")
