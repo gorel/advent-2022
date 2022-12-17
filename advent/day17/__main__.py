@@ -29,15 +29,6 @@ SHAPES_IDX = [
     Shape.SQUARE,
 ]
 
-SHAPES = {
-    # Thanks, autoformatter!
-    "horizontal": ["####"],
-    "plus": [" # " "###" " # "],
-    "L": ["  #", "  #", "###"],
-    "line": ["#", "#", "#", "#"],
-    "square": ["##", "##"],
-}
-
 
 @dataclass
 class Point:
@@ -63,7 +54,7 @@ class Tetris:
 
     def _next_shape(self) -> Shape:
         res = SHAPES_IDX[self.shape_idx]
-        self.shape_idx = (self.shape_idx + 1) % len(SHAPES)
+        self.shape_idx = (self.shape_idx + 1) % len(SHAPES_IDX)
         return res
 
     def _next_move(self) -> Direction:
