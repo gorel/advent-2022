@@ -3,11 +3,13 @@
 import argparse
 import datetime
 import os
-from typing import Callable, Optional, Tuple, TypeVar
+from typing import Callable, Optional, Tuple, TypeVar, Union
 
 T1 = TypeVar("T1")
 T2 = TypeVar("T2")
 
+FirstPartSolveFunc = Callable[[str], T1]
+SecondPartSolveFunc = Callable[[str], T1]
 SolveFunc = Callable[[str], Tuple[T1, T2]]
 
 DEFAULT_TEST_INPUT_NAME = "test.txt"
@@ -31,9 +33,18 @@ def get_default_input_path(main_file: str) -> str:
     return os.path.join(directory, DEFAULT_INPUT_NAME)
 
 
+def validate_test_input(label: str, expected: Optional[T1], actual: T1) -> None:
+    if expected is not None:
+        assert expected == actual, f"Failed test [{label}]: {expected} != {actual}"
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"Passed test [{label}] ({now})")
+
+
 def run_default(
     main_file: str,
-    solve: SolveFunc[T1, T2],
+    solver: Union[
+        SolveFunc[T1, T2], Tuple[FirstPartSolveFunc[T1], SecondPartSolveFunc[T2]]
+    ],
     test_solution1: Optional[T1] = None,
     test_solution2: Optional[T2] = None,
 ) -> None:
@@ -44,24 +55,29 @@ def run_default(
 
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Starting ({now})")
-    res1, res2 = solve(args.test_file)
-    if test_solution1 is not None:
-        assert (
-            res1 == test_solution1
-        ), f"Failed test for part 1; {res1} != {test_solution1}"
+    res1 = 0
+    res2 = 0
+
+    if isinstance(solver, tuple):
+        solve1, solve2 = solver
+        res1 = solve1(args.test_file)
+        validate_test_input("part 1", test_solution1, res1)
+        res2 = solve2(args.test_file)
+        validate_test_input("part 2", test_solution2, res2)
+
+        real_res1 = solve1(args.input_file)
+        print(f"Solution 1: {real_res1}")
+        real_res2 = solve2(args.input_file)
+        print(f"Solution 2: {real_res2}")
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Passed test input #1 ({now})")
-    if test_solution2 is not None:
-        assert (
-            res2 == test_solution2
-        ), f"Failed test for part 2; {res2} != {test_solution2}"
-        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"Passed test input #2 ({now})")
+        print(f"Finished real input ({now})")
+    else:
+        res1, res2 = solver(args.test_file)
+        validate_test_input("part 1", test_solution1, res1)
+        validate_test_input("part 2", test_solution2, res2)
+        real_res1, real_res2 = solver(args.input_file)
+        print(f"Solution 1: {real_res1}")
+        print(f"Solution 2: {real_res2}")
 
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"Starting real input ({now})")
-    res1, res2 = solve(args.input_file)
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Finished real input ({now})")
-    print(f"Solution 1: {res1}")
-    print(f"Solution 2: {res2}")
