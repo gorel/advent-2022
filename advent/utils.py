@@ -16,6 +16,10 @@ DEFAULT_TEST_INPUT_NAME = "test.txt"
 DEFAULT_INPUT_NAME = "input.txt"
 
 
+def green(s: str) -> str:
+    return f"\033[92m\033[1m{s}\033[0m"
+
+
 def get_parser(input_filepath: str, test_filepath: str) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input-file", default=input_filepath)
@@ -66,9 +70,9 @@ def run_default(
         validate_test_input("part 2", test_solution2, res2)
 
         real_res1 = solve1(args.input_file)
-        print(f"Solution 1: {real_res1}")
+        print(green(f"Solution 1: {real_res1}"))
         real_res2 = solve2(args.input_file)
-        print(f"Solution 2: {real_res2}")
+        print(green(f"Solution 2: {real_res2}"))
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"Finished real input ({now})")
     else:
@@ -76,8 +80,8 @@ def run_default(
         validate_test_input("part 1", test_solution1, res1)
         validate_test_input("part 2", test_solution2, res2)
         real_res1, real_res2 = solver(args.input_file)
-        print(f"Solution 1: {real_res1}")
-        print(f"Solution 2: {real_res2}")
+        print(green(f"Solution 1: {real_res1}"))
+        print(green(f"Solution 2: {real_res2}"))
 
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Finished real input ({now})")
